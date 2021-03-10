@@ -137,9 +137,6 @@ static void print_status_narrow(void) {
         case _QWERTY:
             oled_write_ln_P(PSTR("Qwrt"), false);
             break;
-        /* case _COLEMAK: */
-        /*     oled_write_ln_P(PSTR("Clmk"), false); */
-        /*     break; */
         default:
             oled_write_P(PSTR("Undef"), false);
     }
@@ -147,7 +144,6 @@ static void print_status_narrow(void) {
     // Print current layer
     oled_write_ln_P(PSTR("LAYER"), false);
     switch (get_highest_layer(layer_state)) {
-        /* case _COLEMAK: */
         case _QWERTY:
             oled_write_P(PSTR("Base\n"), false);
             break;
@@ -187,16 +183,6 @@ void oled_task_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        /* case KC_QWERTY: */
-        /*     if (record->event.pressed) { */
-        /*         set_single_persistent_default_layer(_QWERTY); */
-        /*     } */
-        /*     return false; */
-        /* case KC_COLEMAK: */
-        /*     if (record->event.pressed) { */
-        /*         set_single_persistent_default_layer(_COLEMAK); */
-        /*     } */
-        /*     return false; */
         case KC_LOWER:
             if (record->event.pressed) {
                 layer_on(_LOWER);
