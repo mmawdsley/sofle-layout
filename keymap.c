@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,    KC_PGUP,    KC_UP,    KC_PGDN,    KC_HOME,    _______,         _______,  KC_LBRC, KC_RBRC, _______, _______, _______,                                                                     \
   _______, KC_LEFT,   KC_DOWN, KC_RGHT,  _______, _______,                       _______, KC_LPRN, KC_RPRN, KC_EQL, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______,       _______, _______, KC_MINS, KC_LABK, KC_RABK, _______, _______, \
-     _______, _______, _______, MO(_ADJUST), _______,       _______, MO(_ADJUST), _______, _______, _______ \
+     _______, _______, _______, _______, MO(_ADJUST),       _______, MO(_ADJUST), _______, _______, _______ \
 ),
 /* RAISE
  * ,----------------------------------------.                    ,-----------------------------------------.
@@ -72,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_F7,   KC_F8,   KC_F8,   KC_F9,   KC_F10,                  KC_F12, KC_INS,   KC_HOME, KC_PGUP,_______, KC_BSPC, \
   _______, _______, _______, _______, _______, KC_CAPS,                        _______, KC_DEL,   KC_END,  KC_PGDN,  KC_DEL, KC_BSPC,                 \
   _______, _______, _______, _______, _______, _______,  _______,       _______,  _______, _______, _______, _______, _______, _______, \
-                         _______, _______, _______, MO(_ADJUST), _______,       _______, MO(_ADJUST), _______, _______, _______ \
+                         _______, _______, _______, MO(_ADJUST), _______,       _______, _______, _______, _______, _______ \
 ),
 /* ADJUST
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_ADJUST] = LAYOUT( \
   XXXXXXX , XXXXXXX,  XXXXXXX ,  XXXXXXX , XXXXXXX, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-  RESET  , XXXXXXX,_______,_______,XXXXXXX,XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+  RESET  , XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
   XXXXXXX , XXXXXXX,XXXXXXX, XXXXXXX,    XXXXXXX,  XXXXXXX,                     XXXXXXX, KC_VOLD, KC_MUTE, KC_VOLU, XXXXXXX, XXXXXXX, \
   XXXXXXX , XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX, XXXXXXX, \
                    _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______ \
