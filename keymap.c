@@ -178,10 +178,21 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             tap_code(KC_VOLD);
         }
     } else if (index == 1) {
-        if (clockwise) {
-            tap_code16(LALT(KC_RIGHT));
-        } else {
-            tap_code16(LALT(KC_LEFT));
+        switch(biton32(layer_state)){
+        case _LOWER:
+            if (clockwise) {
+                tap_code16(LALT(KC_RIGHT));
+            } else {
+                tap_code16(LALT(KC_LEFT));
+            }
+            break;
+        default:
+            if (clockwise) {
+                tap_code16(LSFT(KC_RIGHT));
+            } else {
+                tap_code16(LSFT(KC_LEFT));
+            }
+            break;
         }
     }
 }
