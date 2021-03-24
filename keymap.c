@@ -2,13 +2,42 @@
 
 enum sofle_layers {
     _QWERTY,
+    _QWERTY_SLIM,
     _LOWER,
     _RAISE,
     _BOTH,
     _DEBUG,
 };
 
+enum sofle_keycodes {
+    KC_QWERTY = SAFE_RANGE,
+    KC_QWERTY_SLIM,
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+/*
+ * QWERTY SLIM
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |  `   |      |      |      |      |      |                    |      |      |      |      |      | Bspc |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  \   |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | ESC  |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *            | LGUI | LCTR | LAlt |LOWER | /Enter  /       \Space \  |RAISE | RAlt | RCTR | RGUI |
+ *            |      |      |      |      |/       /         \      \ |      |      |      |      |
+ *            `----------------------------------'           '------''---------------------------'
+ */
+
+[_QWERTY_SLIM] = LAYOUT(
+  KC_GRV,    XXXXXXX,XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,   KC_BSPC,
+  KC_TAB,       KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,  KC_U,  KC_I,   KC_O,   KC_P,   KC_BSLS,
+  CTL_T(KC_ESC),KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,  KC_J,  KC_K,   KC_L,   KC_SCLN,KC_QUOT,
+  KC_LSFT,      KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     KC_HOME,KC_N,  KC_M,  KC_COMM,KC_DOT, KC_SLSH,KC_RSFT,
+                  KC_LGUI,  KC_LCTRL,KC_LALT,MO(_LOWER), KC_ENT,      KC_SPC,  MO(_RAISE), KC_RALT,  KC_RCTRL, KC_RGUI
+),
 /*
  * QWERTY
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -97,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* DEBUG
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      |QWERTY| SLIM |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | RESET|      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -110,7 +139,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            `----------------------------------'           '------''---------------------------'
  */
 [_DEBUG] = LAYOUT(
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, KC_QWERTY, KC_QWERTY_SLIM, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   RESET,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -219,3 +248,23 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 }
 
 #endif
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case KC_QWERTY:
+        if (record->event.pressed) {
+            set_single_persistent_default_layer(_QWERTY);
+        }
+        return false;
+    case KC_QWERTY_SLIM:
+        if (record->event.pressed) {
+            set_single_persistent_default_layer(_QWERTY_SLIM);
+        }
+        return false;
+    }
+    return true;
+}
+
+void matrix_init_user(void) {
+    set_single_persistent_default_layer(_QWERTY);
+}
