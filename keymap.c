@@ -164,17 +164,14 @@ static void render_logo(void) {
 static void print_status_narrow(void) {
     // Print current mode
     oled_write_P(PSTR("\n\n"), false);
-    oled_write_ln_P(PSTR("MODE"), false);
-    oled_write_ln_P(PSTR(""), false);
-    if (keymap_config.swap_lctl_lgui) {
-        oled_write_ln_P(PSTR("MAC"), false);
-    } else {
-        oled_write_ln_P(PSTR("WIN"), false);
-    }
+    oled_write_ln_P(PSTR("MODE\n"), false);
 
     switch (get_highest_layer(default_layer_state)) {
         case _QWERTY:
             oled_write_ln_P(PSTR("Qwrt"), false);
+            break;
+        case _QWERTY_SLIM:
+            oled_write_ln_P(PSTR("Slim"), false);
             break;
         default:
             oled_write_P(PSTR("Undef"), false);
@@ -186,11 +183,17 @@ static void print_status_narrow(void) {
         case _QWERTY:
             oled_write_P(PSTR("Base\n"), false);
             break;
+        case _QWERTY_SLIM:
+            oled_write_P(PSTR("Slim\n"), false);
+            break;
         case _RAISE:
             oled_write_P(PSTR("Raise"), false);
             break;
         case _LOWER:
             oled_write_P(PSTR("Lower"), false);
+            break;
+        case _DEBUG:
+            oled_write_P(PSTR("Debug"), false);
             break;
         case _BOTH:
             oled_write_P(PSTR("Adj\n"), false);
