@@ -149,6 +149,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef OLED_DRIVER_ENABLE
 
+void suspend_power_down_user(void) {
+    oled_off();
+}
+
 #ifndef MASTER_RIGHT
 static void render_logo(void) {
     static const char PROGMEM qmk_logo[] = {
