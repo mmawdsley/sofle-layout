@@ -239,21 +239,10 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             tap_code(KC_VOLD);
         }
     } else if (index == 1) {
-        switch(biton32(layer_state)){
-        case _LOWER:
-            if (clockwise) {
-                tap_code16(LALT(KC_RIGHT));
-            } else {
-                tap_code16(LALT(KC_LEFT));
-            }
-            break;
-        default:
-            if (clockwise) {
-                tap_code16(LSFT(KC_RIGHT));
-            } else {
-                tap_code16(LSFT(KC_LEFT));
-            }
-            break;
+        if (clockwise) {
+            tap_code16(LGUI(KC_PGUP));
+        } else {
+            tap_code16(LGUI(KC_PGDN));
         }
     }
 }
