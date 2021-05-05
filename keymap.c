@@ -10,12 +10,6 @@ enum sofle_layers {
     _DEBUG,
 };
 
-enum sofle_keycodes {
-    KC_QWERTY = SAFE_RANGE,
-    KC_QWERTY_SLIM,
-    KC_QWERTY_GAME,
-};
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
  * QWERTY SLIM
@@ -164,7 +158,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            `----------------------------------'           '------''---------------------------'
  */
 [_DEBUG] = LAYOUT(
-  XXXXXXX, KC_QWERTY, KC_QWERTY_SLIM, KC_QWERTY_GAME, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, DF(_QWERTY), DF(_QWERTY_SLIM), DF(_QWERTY_GAME), XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   RESET,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -280,27 +274,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 
 #endif
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-    case KC_QWERTY:
-        if (record->event.pressed) {
-            set_single_persistent_default_layer(_QWERTY);
-        }
-        return false;
-    case KC_QWERTY_SLIM:
-        if (record->event.pressed) {
-            set_single_persistent_default_layer(_QWERTY_SLIM);
-        }
-        return false;
-    case KC_QWERTY_GAME:
-        if (record->event.pressed) {
-            set_single_persistent_default_layer(_QWERTY_GAME);
-        }
-        return false;
-    }
-    return true;
+void matrix_init_user(void) {
+    default_layer_set(_QWERTY_SLIM);
 }
 
-void matrix_init_user(void) {
-    set_single_persistent_default_layer(_QWERTY_SLIM);
-}
