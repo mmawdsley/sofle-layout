@@ -3,6 +3,7 @@
 enum sofle_layers {
     _QWERTY,
     _QWERTY_SLIM,
+    _QWERTY_GAME,
     _LOWER,
     _RAISE,
     _BOTH,
@@ -12,6 +13,7 @@ enum sofle_layers {
 enum sofle_keycodes {
     KC_QWERTY = SAFE_RANGE,
     KC_QWERTY_SLIM,
+    KC_QWERTY_GAME,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -60,6 +62,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   CTL_T(KC_ESC),KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,  KC_J,  KC_K,   KC_L,   KC_SCLN,KC_QUOT,
   KC_LSFT,      KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     _______,KC_N,  KC_M,  KC_COMM,KC_DOT, KC_SLSH,KC_RSFT,
                   KC_LGUI,  KC_LCTRL,KC_LALT,MO(_LOWER), KC_ENT,      KC_SPC,  MO(_RAISE), KC_RALT,  KC_RCTRL, KC_RGUI
+),
+/*
+ * QWERTY (gaming)
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  | Bspc |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  \   |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | LCTR |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *            | LGUI | LCTR | LAlt |LOWER | /Space  /       \Enter \  |RAISE | RAlt | RCTR | Esc  |
+ *            |      |      |      |      |/       /         \      \ |      |      |      |      |
+ *            `----------------------------------'           '------''---------------------------'
+ */
+
+[_QWERTY_GAME] = LAYOUT(
+  KC_GRV,       KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,  KC_7,  KC_8,   KC_9,   KC_0,   KC_BSPC,
+  KC_TAB,       KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,  KC_U,  KC_I,   KC_O,   KC_P,   KC_BSLS,
+  KC_LCTRL,     KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,  KC_J,  KC_K,   KC_L,   KC_SCLN,KC_QUOT,
+  KC_LSFT,      KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     _______,KC_N,  KC_M,  KC_COMM,KC_DOT, KC_SLSH,KC_RSFT,
+                  KC_LGUI,  KC_LCTRL,KC_LALT,MO(_LOWER), KC_ENT,      KC_SPC,  MO(_RAISE), KC_RALT,  KC_RCTRL, KC_ESC
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -126,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* DEBUG
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |QWERTY| SLIM |      |      |      |                    |      |      |      |      |      |      |
+ * |      |QWERTY| SLIM | GAME |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | RESET|      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -139,7 +164,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            `----------------------------------'           '------''---------------------------'
  */
 [_DEBUG] = LAYOUT(
-  XXXXXXX, KC_QWERTY, KC_QWERTY_SLIM, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, KC_QWERTY, KC_QWERTY_SLIM, KC_QWERTY_GAME, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   RESET,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -177,6 +202,9 @@ static void print_status_narrow(void) {
         case _QWERTY_SLIM:
             oled_write_ln_P(PSTR("Slim"), false);
             break;
+        case _QWERTY_GAME:
+            oled_write_ln_P(PSTR("Game"), false);
+            break;
         default:
             oled_write_P(PSTR("Undef"), false);
     }
@@ -189,6 +217,9 @@ static void print_status_narrow(void) {
             break;
         case _QWERTY_SLIM:
             oled_write_P(PSTR("Slim\n"), false);
+            break;
+        case _QWERTY_GAME:
+            oled_write_P(PSTR("Game\n"), false);
             break;
         case _RAISE:
             oled_write_P(PSTR("Raise"), false);
@@ -259,6 +290,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_QWERTY_SLIM:
         if (record->event.pressed) {
             set_single_persistent_default_layer(_QWERTY_SLIM);
+        }
+        return false;
+    case KC_QWERTY_GAME:
+        if (record->event.pressed) {
+            set_single_persistent_default_layer(_QWERTY_GAME);
         }
         return false;
     }
