@@ -3,7 +3,9 @@
 
 from PIL import Image, ImageDraw, ImageFont
 from keycodes import KEYCODES
+from argparse import ArgumentParser
 import json
+import sys
 
 KEY_WIDTH = 50
 NUM_COLS = 12
@@ -18,13 +20,34 @@ GAP = 100
 TTF_FONT_PATH = '/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'
 FONT_SIZE = 10
 
+parser = ArgumentParser()
+parser.add_argument("--with-base-layers", help="number of base layers", type=int)
+parser.add_argument("--base-layer", help="base layer ID", type=int)
+
+args = parser.parse_args()
+
+if args.with_base_layers and args.base_layer is None:
+    print("Base layer ID is required when managing base layers\n")
+    parser.print_help()
+    exit(1)
+
 keyboard_width = KEY_WIDTH * NUM_COLS + (NUM_COLS - 1) * KEY_GUTTER
 keyboard_height = KEY_WIDTH * NUM_ROWS + (NUM_ROWS - 1) * KEY_GUTTER
 
 with open('keymap.json', 'r') as f:
     keyboard = json.loads(f.read())
 
-layer_count = len(keyboard['layers'])
+layers = keyboard['layers']
+layer_count = len(layers)
+skip_layers = []
+
+if args.with_base_layers:
+    layer_count = layer_count - args.with_base_layers + 1
+
+    for layer_idx in range(0, args.with_base_layers):
+        if layer_idx != args.base_layer:
+            skip_layers.append(layer_idx)
+
 image_width = keyboard_width + IMAGE_PADDING * 2 + GAP
 image_height = keyboard_height * layer_count + (layer_count - 1) * KEYBOARD_GUTTER + (layer_count - 1) * KEY_GUTTER + IMAGE_PADDING * 2 + layer_count * TITLE_GUTTER
 
@@ -62,8 +85,13 @@ def draw_key(x, y, keycode):
 x = IMAGE_PADDING
 y = IMAGE_PADDING
 
+layer_count = 0
+
 for layer_idx in range(0, len(keyboard['layers'])):
-    text = 'Layer %d' % layer_idx
+    if layer_idx in skip_layers:
+        continue
+
+    text = 'Layer %d' % layer_count
     layer = keyboard['layers'][layer_idx]
 
     text_width, text_height = draw.textsize(text)
@@ -101,5 +129,6 @@ for layer_idx in range(0, len(keyboard['layers'])):
 
     x = IMAGE_PADDING
     y += KEYBOARD_GUTTER + KEY_WIDTH + KEY_GUTTER
+    layer_count += 1
 
 layout_image.save('layout.png')

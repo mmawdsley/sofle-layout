@@ -148,4 +148,5 @@ KEYCODES = {
     'KC_ACL2': 'Speed 2',
     'KC_QWERTY': 'Qwerty',
     'KC_QWERTY_SLIM': 'Planck',
+    'KC_QWERTY_GAME': 'Game',
 }
