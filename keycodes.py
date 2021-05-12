@@ -132,6 +132,7 @@ KEYCODES = {
     'KC_NO': 'NOOP',
     'KC_BTN1': 'Left\nclick',
     'KC_BTN2': 'Right\nclick',
+    'KC_BTN3': 'Middle\nclick',
     'KC_MS_U': 'Mouse\nup',
     'KC_MS_R': 'Mouse\nright',
     'KC_MS_D': 'Mouse\ndown',
