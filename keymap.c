@@ -2,7 +2,6 @@
 
 enum sofle_layers {
     _QWERTY,
-    _QWERTY_SLIM,
     _QWERTY_GAME,
     _LOWER,
     _RAISE,
@@ -11,29 +10,6 @@ enum sofle_layers {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/*
- * QWERTY SLIM
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |  `   |      |      |      |      |      |                    |      |      |      |      |      | Bspc |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  \   |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | ESC  |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LCTR | LAlt |LOWER | /Enter  /       \Space \  |RAISE | RAlt | RCTR | Del  |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
- */
-
-[_QWERTY_SLIM] = LAYOUT(
-  KC_GRV,    XXXXXXX,XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,   KC_BSPC,
-  KC_TAB,       KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,  KC_U,  KC_I,   KC_O,   KC_P,   KC_BSLS,
-  CTL_T(KC_ESC),KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,  KC_J,  KC_K,   KC_L,   KC_SCLN,KC_QUOT,
-  KC_LSFT,      KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     _______,KC_N,  KC_M,  KC_COMM,KC_DOT, KC_SLSH,KC_RSFT,
-                  KC_LGUI,  KC_LCTRL,KC_LALT,MO(_LOWER), KC_ENT,      KC_SPC,  MO(_RAISE), KC_RALT,  KC_RCTRL, KC_DEL
-),
 /*
  * QWERTY
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -45,7 +21,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
  * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LCTR | LAlt |LOWER | /Enter  /       \Space \  |RAISE | RAlt | RCTR | Del  |
+ *            | LGUI | LCTR | LAlt |LOWER | /Enter  /       \Space \  |RAISE | RAlt | RCTR | RGUI |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
@@ -54,8 +30,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,       KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,  KC_7,  KC_8,   KC_9,   KC_0,   KC_BSPC,
   KC_TAB,       KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,  KC_U,  KC_I,   KC_O,   KC_P,   KC_BSLS,
   CTL_T(KC_ESC),KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,  KC_J,  KC_K,   KC_L,   KC_SCLN,KC_QUOT,
-  KC_LSFT,      KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     _______,KC_N,  KC_M,  KC_COMM,KC_DOT, KC_SLSH,KC_RSFT,
-                  KC_LGUI,  KC_LCTRL,KC_LALT,MO(_LOWER), KC_ENT,      KC_SPC,  MO(_RAISE), KC_RALT,  KC_RCTRL, KC_DEL
+  KC_LSFT,      KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     _______,KC_N,  KC_M,  KC_COMM,KC_DOT, KC_SLSH,RSFT_T(KC_DEL),
+                  KC_LGUI,  KC_LCTRL,KC_LALT,MO(_LOWER), KC_ENT,      KC_SPC,  MO(_RAISE), KC_RALT,  KC_RCTRL, KC_RGUI
 ),
 /*
  * QWERTY (gaming)
@@ -111,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
  * |      |  F9  |  F10 |  F11 |  F12 |      |-------|    |-------| Home | PgUp | PgDn | End  |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | Del |
+ *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
@@ -132,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
  * |      |      |WheelL|      |WheelR|WheelD|-------|    |-------|      | PREV | PLAY | NEXT |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | Del |
+ *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
@@ -145,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* DEBUG
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |QWERTY| SLIM | GAME |      |      |                    |      |      |      |      |      |      |
+ * |      |QWERTY| GAME |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | RESET|      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -158,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            `----------------------------------'           '------''---------------------------'
  */
 [_DEBUG] = LAYOUT(
-  XXXXXXX, DF(_QWERTY), DF(_QWERTY_SLIM), DF(_QWERTY_GAME), XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, DF(_QWERTY), DF(_QWERTY_GAME), XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   RESET,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -193,9 +169,6 @@ static void print_status_narrow(void) {
         case _QWERTY:
             oled_write_ln_P(PSTR("Qwrt"), false);
             break;
-        case _QWERTY_SLIM:
-            oled_write_ln_P(PSTR("Slim"), false);
-            break;
         case _QWERTY_GAME:
             oled_write_ln_P(PSTR("Game"), false);
             break;
@@ -208,9 +181,6 @@ static void print_status_narrow(void) {
     switch (get_highest_layer(layer_state)) {
         case _QWERTY:
             oled_write_P(PSTR("Base\n"), false);
-            break;
-        case _QWERTY_SLIM:
-            oled_write_P(PSTR("Slim\n"), false);
             break;
         case _QWERTY_GAME:
             oled_write_P(PSTR("Game\n"), false);
@@ -276,6 +246,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #endif
 
 void matrix_init_user(void) {
-    default_layer_set(_QWERTY_SLIM);
+    default_layer_set(_QWERTY);
 }
 

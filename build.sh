@@ -9,5 +9,5 @@ fi
 
 qmk compile -kb sofle/rev1 -km mmawdsley
 qmk c2json -kb sofle/rev1 -km mmawdsley --no-cpp -o keymap.json keymap.c
-python3 layout_generator.py --with-base-layers=3 --base-layer=1
+python3 layout_generator.py --with-base-layers=2 --base-layer=0
 rm keymap.json
