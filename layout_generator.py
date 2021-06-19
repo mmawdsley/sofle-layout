@@ -20,6 +20,15 @@ GAP = 100
 TTF_FONT_PATH = '/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'
 FONT_SIZE = 10
 
+IMAGE_KEY_MAP = {
+    'KC_TRNS': {
+        'filename': 'transparent.png'
+    },
+    'KC_NO': {
+        'filename': 'noop.png'
+    }
+}
+
 parser = ArgumentParser()
 parser.add_argument("--with-base-layers", help="number of base layers", type=int)
 parser.add_argument("--base-layer", help="base layer ID", type=int)
@@ -53,7 +62,9 @@ image_height = keyboard_height * layer_count + (layer_count - 1) * KEYBOARD_GUTT
 
 layout_image = Image.new('RGB', (image_width, image_height), color = 'white')
 key_image = Image.open('key.png')
-transparent_image = Image.open('transparent.png')
+
+for keycode in IMAGE_KEY_MAP:
+    IMAGE_KEY_MAP[keycode]['image'] = Image.open(IMAGE_KEY_MAP[keycode]['filename'])
 
 draw = ImageDraw.Draw(layout_image)
 font = ImageFont.truetype(TTF_FONT_PATH, FONT_SIZE)
@@ -63,24 +74,23 @@ layout_map = 'ooooo ooooonooooo ooooonooooo ooooonooooo ssoooooBoooo_ooooooo'
 def draw_key(x, y, keycode):
     layout_image.paste(key_image, (x, y))
 
-    if keycode == 'KC_TRNS':
-        text_width, text_height = transparent_image.size
+    try:
+        text_width, text_height = IMAGE_KEY_MAP[keycode]['image'].size
         text_x = int(x + KEY_WIDTH / 2 - text_width / 2)
         text_y = int(y + KEY_WIDTH / 2 - text_height / 2)
 
-        layout_image.paste(transparent_image, (text_x, text_y))
-        return
-
-    try:
-        text = KEYCODES[keycode]
+        layout_image.paste(IMAGE_KEY_MAP[keycode]['image'], (text_x, text_y))
     except KeyError:
-        text = keycode
+        try:
+            text = KEYCODES[keycode]
+        except KeyError:
+            text = keycode
 
-    text_width, text_height = draw.textsize(text)
-    text_x = x + KEY_WIDTH / 2 - text_width / 2
-    text_y = y + KEY_WIDTH / 2 - text_height / 2
+        text_width, text_height = draw.textsize(text)
+        text_x = x + KEY_WIDTH / 2 - text_width / 2
+        text_y = y + KEY_WIDTH / 2 - text_height / 2
 
-    draw.text((text_x, text_y), text, fill=(0,0,0,128), font=font, align='center')
+        draw.text((text_x, text_y), text, fill=(0,0,0,128), font=font, align='center')
 
 x = IMAGE_PADDING
 y = IMAGE_PADDING
