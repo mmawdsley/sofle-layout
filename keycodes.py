@@ -23,7 +23,7 @@ KEYCODES = {
     'KC_TRNS': 'KC_TRNS',
     'KC_DLR': '$',
     'CTL_T(KC_ESC)': 'Control\nEscape',
-    'RSFT_T(KC_DEL)': 'Shift\nDelete',
+    'LT(_RAISE, KC_DEL)': 'Raise\nDel',
     'DF(_QWERTY)': 'Qwerty\nlayout',
     'DF(_QWERTY_GAME)': 'Game\nlayout',
     'KC_PGUP': 'Page\nUp',
